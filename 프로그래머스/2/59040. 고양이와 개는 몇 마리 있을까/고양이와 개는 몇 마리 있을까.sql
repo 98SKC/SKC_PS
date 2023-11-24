@@ -1,0 +1,11 @@
+-- 코드를 입력하세요
+SELECT  CASE 
+        WHEN ANIMAL_TYPE='Cat' THEN 'Cat'
+        WHEN ANIMAL_TYPE='Dog' THEN 'Dog'
+END 
+, COUNT(*) AS count
+FROM ANIMAL_INS
+GROUP BY ANIMAL_TYPE
+ORDER BY ANIMAL_TYPE
+
+
