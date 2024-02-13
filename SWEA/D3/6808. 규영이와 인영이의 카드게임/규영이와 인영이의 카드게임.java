@@ -5,7 +5,8 @@ import java.io.*;
 
 public class Solution {
 	
-	static int[] kZero;
+
+	static List<Integer> kZero;
 	static int[] iZero;
 	static int[] sub;
 	static boolean[] v;
@@ -19,26 +20,25 @@ public class Solution {
 		StringBuilder sb=new StringBuilder();
 		StringTokenizer st;
 		int T=Integer.parseInt(br.readLine());
-		HashSet<Integer> set=new HashSet<>();
+		
 		for(int tc=1;tc<=T;tc++) {
-			set.clear();
+			kZero=new ArrayList<>();
 			win=0;
 			lose=0;
 			st=new StringTokenizer(br.readLine());
-			kZero=new int[9];
 			iZero=new int[9];
 			v=new boolean[9];
 			sub=new int[9];
 			for(int i=0;i<9;i++) {
-				kZero[i]=Integer.parseInt(st.nextToken());
-				set.add(kZero[i]);
+				kZero.add(Integer.parseInt(st.nextToken()));
 			}
 			int count=0;
 			for(int i=1;i<=18;i++) {
-				if(!set.contains(i)) {
+				if(!kZero.contains(i)) {
 					iZero[count++]=i;
 				}
 			}
+			
 			perm(0);
 			sb.append("#").append(tc).append(" ").append(win).append(" ").append(lose).append("\n");
 		}
@@ -49,10 +49,10 @@ public class Solution {
 			int kWin=0;
 			int iWin=0;
 			for(int i=0;i<9;i++) {
-				if(kZero[i]-sub[i]>0) {
-					kWin+=kZero[i]+sub[i];
+				if(kZero.get(i)-sub[i]>0) {
+					kWin+=kZero.get(i)+sub[i];
 				}else {
-					iWin+=kZero[i]+sub[i];
+					iWin+=kZero.get(i)+sub[i];
 				}
 			}
 			if(kWin>iWin) {
