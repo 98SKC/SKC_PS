@@ -7,9 +7,9 @@ public class Solution {
      
     static int[] kZero;
     static int[] iZero;
-    static int[] sub;
     static boolean[] v;
     static int win;
+    static int[] factorial= {1,2,6,24,120,720,5040,40320,362880};
     
      
     public static void main(String[] args) throws Exception{
@@ -25,7 +25,6 @@ public class Solution {
             kZero=new int[9];
             iZero=new int[9];
             v=new boolean[9];
-            sub=new int[9];
             for(int i=0;i<9;i++) {
                 kZero[i]=Integer.parseInt(st.nextToken());
                 set.add(kZero[i]);
@@ -42,16 +41,16 @@ public class Solution {
         System.out.println(sb);
     }
     static void perm(int cnt,int sum) {
-        if(sum>85) {
-        	int total=1;
-        	for(int i=9-cnt;i>0;i--) {
-        		total*=i;
-        	}
-        	win+=total;
+       if(cnt==9) {
+    	   if(sum>85) {
+    		   win+=1;
+    	   }
+    	   return;
+       }
+    	if(sum>85) {
+    		win+=factorial[9-cnt-1];
         	return;
         }
-
-     
         for(int i=0;i<9;i++) {
             if(v[i]) continue;
             v[i]=true;
