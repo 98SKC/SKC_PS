@@ -24,17 +24,22 @@ public class Main {
             }
         }
         //처음 0,0부터 재귀하며 메서드를 스택하기 보다 1이 처음 발견되면 거기부터 하자.
-//        for (int i = 0; i < 10; i++) {
-//            for (int j = 0; j < 10; j++) {
-//                if (paper[i][j] == 1){
-//                    dfs(i,j,0);
-//                    check=true;
-//                    break;
-//                }
-//            }
-//            if(check) break;
-//        }
-        dfs(0,0,0);
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (paper[i][j] == 1){
+                    dfs(i,j,0);
+                    check=true;
+                    break;
+                }
+                if(i==9&&j==9) min=0;
+            }
+            if(check) break;
+
+        }
+
+
+      //  dfs(0,0,0);
+
 
         if(min==Integer.MAX_VALUE){
             min=-1;
@@ -49,6 +54,7 @@ public class Main {
     //1을 찾았을 때 1~5까지중 붙일 수 있는 색종이를 붙였다 땠다 하면서 백트래킹을 시도.
     //
     static void dfs(int i, int j, int count) {
+      //  System.out.println("i: "+i+" "+" j:"+" "+j);
         if (count >= min) {
             return;
         }
