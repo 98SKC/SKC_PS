@@ -12,7 +12,6 @@ public class Solution {
 	static int[] dj= {0,-1,0,1};
 	
 	public static void main(String[] args) throws Exception {
-	//	System.setIn(new FileInputStream("res/sample_input (4).txt"));
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb=new StringBuilder();
 		StringTokenizer st;
@@ -91,9 +90,6 @@ public class Solution {
 				if(map[i][j]>map[ni][nj]||map[i][j]>map[ni][nj]-k) {//지금 위치보다 낮거나, 깎으면 갈 수 있다.
 					return true;
 				}
-//				else if(map[i][j]>map[i+di[a]][j+dj[a]]-k) {
-//					return true;
-//				}
 			}
 		}
 		return false;
