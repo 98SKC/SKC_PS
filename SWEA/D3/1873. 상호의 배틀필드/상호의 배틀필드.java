@@ -13,7 +13,6 @@ public class Solution
 	
     public static void main(String args[]) throws Exception
     {
-    	//System.setIn(new FileInputStream("src/res/input (11).txt"));
     	BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
     	StringBuilder sb=new StringBuilder();
     	StringTokenizer st;
@@ -60,23 +59,22 @@ public class Solution
     		for(int i=0;i<oper.length();i++) {
     			switch(oper.charAt(i)) {
     	    	case 'U':
-    	    		Up();
+    	    		turn(0);
     	    		break;
     	    	case 'D':
-    	    		Down();
+    	    		turn(2);
     	    		break;
     	    	case 'L':
-    	    		Left();
+    	    		turn(3);
     	    		break;
     	    	case 'R':
-    	    		Right();
+    	    		turn(1);
     	    		break;
     	    	case 'S':
     	    		Shoot();
     	    	}
     		}
-    		
-    		
+
     		sb.append("#").append(tc).append(" ");
     		for(int h=0;h<H;h++) {
     			for(int w=0;w<W;w++) {
@@ -89,66 +87,34 @@ public class Solution
        
     }
 
-    
-    static void Up() {
+    static void turn(int dir) {
 
-    	tank[2] = 0; // 방향을 위쪽으로 업데이트
+    	tank[2] = dir; // 방향을 위쪽으로 업데이트
         int nextI = tank[0] + di[tank[2]];
         int nextJ = tank[1] + dj[tank[2]];
-        if(nextI >= 0 && nextI < H && map[nextI][nextJ] == '.') { // 맵 안쪽이고 다음 위치가 평지라면
+        if(nextJ >= 0 && nextJ < W &&nextI >= 0 && nextI < H && map[nextI][nextJ] == '.') { // 맵 안쪽이고 다음 위치가 평지라면
             map[tank[0]][tank[1]] = '.'; // 현재 위치를 평지로 변경
             tank[0] = nextI; // 위치 업데이트
-            tank[1] = nextJ;
-            map[tank[0]][tank[1]] = '^'; // 새 위치에 전차 배치
-        } else { // 이동하지 않고 방향만 변경
-            map[tank[0]][tank[1]] = '^';
+            tank[1] = nextJ; 
+        } 
+        switch(dir) {
+        	case 0:
+        		 map[tank[0]][tank[1]] = '^';
+        		break;
+        	case 1:
+        		map[tank[0]][tank[1]] = '>'; 
+        		break;
+        	case 2:
+        		 map[tank[0]][tank[1]] = 'v'; 
+        		break;
+        	case 3:
+        		 map[tank[0]][tank[1]] = '<';
+        		break;
         }
+        
+        
     }
-    static void Right() {
-
-        tank[2] = 1; // 방향을 오른쪽으로 업데이트
-        int nextI = tank[0] + di[tank[2]];
-        int nextJ = tank[1] + dj[tank[2]];
-        if(nextJ >= 0 && nextJ < W && map[nextI][nextJ] == '.') { // 맵 안쪽이고 다음 위치가 평지라면
-            map[tank[0]][tank[1]] = '.'; // 현재 위치를 평지로 변경
-            tank[0] = nextI;
-            tank[1] = nextJ;
-            map[tank[0]][tank[1]] = '>'; // 새 위치에 전차 배치
-        } else { // 이동하지 않고 방향만 변경
-            map[tank[0]][tank[1]] = '>';
-        }
-    }
-
-    static void Down() {
-
-        tank[2] = 2; // 방향을 아래쪽으로 업데이트
-        int nextI = tank[0] + di[tank[2]];
-        int nextJ = tank[1] + dj[tank[2]];
-        if(nextI >= 0 && nextI < H && map[nextI][nextJ] == '.') { // 맵 안쪽이고 다음 위치가 평지라면
-            map[tank[0]][tank[1]] = '.'; // 현재 위치를 평지로 변경
-            tank[0] = nextI;
-            tank[1] = nextJ;
-            map[tank[0]][tank[1]] = 'v'; // 새 위치에 전차 배치
-        } else { // 이동하지 않고 방향만 변경
-            map[tank[0]][tank[1]] = 'v';
-        }
-    }
-
-    static void Left() {
-
-        tank[2] = 3; // 방향을 왼쪽으로 업데이트
-        int nextI = tank[0] + di[tank[2]];
-        int nextJ = tank[1] + dj[tank[2]];
-        if(nextJ >= 0 && nextJ < W && map[nextI][nextJ] == '.') { // 맵 안쪽이고 다음 위치가 평지라면
-            map[tank[0]][tank[1]] = '.'; // 현재 위치를 평지로 변경
-            tank[0] = nextI;
-            tank[1] = nextJ;
-            map[tank[0]][tank[1]] = '<'; // 새 위치에 전차 배치
-        } else { // 이동하지 않고 방향만 변경
-            map[tank[0]][tank[1]] = '<';
-        }
-    }
-   
+    
     static void Shoot() {
 
         int boomI = tank[0] + di[tank[2]];
