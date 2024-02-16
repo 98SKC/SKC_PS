@@ -4,7 +4,7 @@ import java.util.*;
 public class Main {
 
 	static char[][] arr;
-	static boolean[][] v;
+	static boolean[] v=new boolean[26];
 	static int[] di= {0,1,0,-1};//우 하 좌 상
 	static int[] dj= {1,0,-1,0};
 	static int R,C;
@@ -16,7 +16,6 @@ public class Main {
     	StringTokenizer st=new StringTokenizer(br.readLine());
     	R=Integer.parseInt(st.nextToken());
     	C=Integer.parseInt(st.nextToken());
-    	HashSet<Character> set=new HashSet<>();
     	
     	String str;
     	arr=new char[R][C];
@@ -27,34 +26,32 @@ public class Main {
     			arr[i][j]=str.charAt(j);
     		}
     	}
-    	back(0,0,set,0);
+    	back(0,0,0);
     	System.out.println(answer);
     	
     }
-    static void back(int i,int j,HashSet<Character> set,int sum) {
-    	
-    	if(set.contains(arr[i][j])) {
-    		answer=Math.max(answer, sum);
-    		return;
-    	}else {
-    		set.add(arr[i][j]);
-    		sum+=1;
-    	}
-    	
-    	int ni;
-    	int nj;
-    	for(int a=0;a<4;a++) {
-    		
-    		ni=i+di[a];
 
-    		nj=j+dj[a];
-    		
-    		if(ni>=0&&ni<R&&nj>=0&&nj<C) {
-    			back(ni,nj,set,sum);
-    		}
-    	}
-    	set.remove(arr[i][j]);
+
+    static void back(int i, int j, int sum) {
+        int index = arr[i][j] - 'A';
+        if(v[index]) {
+            answer = Math.max(answer, sum);
+            return;
+        }
+        v[index] = true;
+        sum += 1;
+        
+        for(int a = 0; a < 4; a++) {
+            int ni = i + di[a];
+            int nj = j + dj[a];
+            
+            if(ni >= 0 && ni < R && nj >= 0 && nj < C) {
+                back(ni, nj, sum);
+            }
+        }
+        v[index] = false; // 방문 해제
     }
+
 
    
 }
