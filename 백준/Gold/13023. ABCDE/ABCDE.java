@@ -8,14 +8,15 @@ public class Main {
 	//B는 C와 친구
 	//C는 D와 친구
 	//D는 E와 친구
-	// 5명이 꼬리 물어서 친구인 경우가 있는지 확인
+	//5명이 꼬리를 물어서 친구인 경우가 있는지 확인
 	
-	static int N,M;
-	//static int[] arr;
+	//문제점1: 친구 관계는 N:N의 관계
+	//문제점2: 사이클이 형성 될 수 있음.
+	
+	static int N,M;// N과 M
 	static ArrayList<Integer>[] arr;
 	static boolean[] v;
 	static boolean answer;
-	static int[] sum;
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -25,7 +26,6 @@ public class Main {
 		
 		int a;
 		int b;
-		//arr=new int[N];
 		arr= new ArrayList[N];
 		v=new boolean[N];
 		for(int i=0;i<N;i++) {
@@ -34,7 +34,6 @@ public class Main {
 		
 		for(int i=0;i<M;i++) {
 			st=new StringTokenizer(br.readLine());
-			
 			a=Integer.parseInt(st.nextToken());
 			b=Integer.parseInt(st.nextToken());
 			
@@ -43,7 +42,9 @@ public class Main {
 		}
 		
 		for(int i=0;i<N;i++) {
-			Find(i,0);
+			v[i]=true;
+			Find(i,1);
+			v[i]=false;
 			//if(answer) break;
 			if(answer) {
 				System.out.println(1);
@@ -65,7 +66,7 @@ public class Main {
 			if(!v[a]) {
 				v[a]=true;
 				Find(a,rank+1);
-				if(answer) return;
+				if(answer) return;// 정답을 찾았으면 재귀를 끝냄.
 				v[a]=false;
 			}	
 		}		
