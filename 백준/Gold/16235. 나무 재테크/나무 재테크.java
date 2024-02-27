@@ -27,6 +27,7 @@ public class Main {
 	static Queue<Tree> q=new ArrayDeque<>();//성장에 성공한 나무
 	static Queue<Tree> die=new ArrayDeque<>();
 	static Queue<Tree> five=new ArrayDeque<>();
+	static int[][] subMap;
 	
 	public static void main(String[] args) throws Exception {
 		 
@@ -38,6 +39,7 @@ public class Main {
 		K=Integer.parseInt(st.nextToken());
 		robot=new int[N][N];
 		map=new int[N][N];
+		subMap=new int[N][N];
 		
 		//로봇이 겨울마다 각 땅에 추가할 양분의 양
 		for(int i=0;i<N;i++) {
@@ -66,8 +68,6 @@ public class Main {
 
 		for(int i=0;i<K;i++) {
 			spring();
-			summer();
-			fall();
 			winter();
 		}
 		
@@ -78,16 +78,26 @@ public class Main {
 	static void spring() {
 		
 		int count=pq.size();
+		int ni;
+		int nj;
 		Tree tree;
 		while(count-- >0) {
 			tree=pq.poll();
 			if(map[tree.i][tree.j]>=tree.age) {
 				map[tree.i][tree.j]-=tree.age;
 				tree.age++;
-				if(tree.age%5==0) five.offer(tree);
+				if(tree.age%5==0) {
+					for(int a=0;a<8;a++) {
+						ni=tree.i+di[a];
+						nj=tree.j+dj[a];
+						if(ni>=0&&ni<N&&nj>=0&&nj<N) {// 맵 안쪽이면
+							q.offer(new Tree(ni,nj,1));// 새로 넣을 큐에 추가함.
+						}
+					}
+				} 
 				q.offer(tree);
 			}else {
-				die.offer(tree);
+				subMap[tree.i][tree.j]+=tree.age/2;// 여름
 			}
 		}
 		while(!q.isEmpty()) {
@@ -95,47 +105,13 @@ public class Main {
 		}// 성장한 나무는 다시 넣어줌.
 	}
 	
-	//여름에는 죽은 나무가 양분으로 변한다
-	static void summer() {
-		int ni;
-		int nj;
-		Tree tree;
-		while(!die.isEmpty()) {
-			tree=die.poll();
-			ni=tree.i;
-			nj=tree.j;
-			
-			map[ni][nj]+=tree.age/2;
-		}
-	}
-	
-	//가을에는 나무가 번식한다. 
-	static void fall() {
-		int ni;
-		int nj;
-		Tree tree;
-		
-		while(!five.isEmpty()) {
-			tree=five.poll();
-			for(int a=0;a<8;a++) {
-				ni=tree.i+di[a];
-				nj=tree.j+dj[a];
-				
-				if(ni>=0&&ni<N&&nj>=0&&nj<N) {// 맵 안쪽이면
-					pq.offer(new Tree(ni,nj,1));// 나무 큐에 추가함.
-				}
-				
-			}
-
-		}
-	}
-	
-	
 	//겨울에는 로봇이 땅에 양분을 뿌리고 다닌다.
 
 	static void winter() {
 		for(int i=0;i<N;i++) {
 			for(int j=0;j<N;j++) {
+				map[i][j]+=subMap[i][j];
+				subMap[i][j]=0;
 				map[i][j]+=robot[i][j];
 			}
 		}
