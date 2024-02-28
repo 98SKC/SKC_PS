@@ -4,10 +4,10 @@ import java.util.*;
 public class Solution
 
 {
-	static int[][] processer;
+
 	static int N;
 	static int min;
-	static int max=0;// 프로세서 개수
+	static int max;// 프로세서 개수
 	static List<Integer> position;
 	static final int[] di= {1,0,-1,0};//0-하. 1-우. 2-상, 3-좌
 	static final int[] dj= {0,1,0,-1};
@@ -27,6 +27,7 @@ public class Solution
     		N=Integer.parseInt(br.readLine());  		
     		map=new boolean[N][N];
     		min=Integer.MAX_VALUE;
+    		max=0;
     		for(int i=0;i<N;i++) {
     			st=new StringTokenizer(br.readLine());
     			for(int j=0;j<N;j++) {
@@ -40,7 +41,7 @@ public class Solution
     		}
     		
     		helper(0,0,map,max);
-    		
+  
     		sb.append("#").append(tc).append(" ").append(min).append("\n");
     	}
     	
@@ -50,6 +51,9 @@ public class Solution
     
     
     public static void helper(int cnt,int answer,boolean[][] visit,int have) {
+    	if(position.size()-cnt+have<max) {//남은 것을 다 연결해도 지금 max보다 적음.
+    		return;
+    	}
     	boolean ch=true;
     	if(cnt==position.size()) {
     		if(have>max) {
@@ -73,14 +77,10 @@ public class Solution
     		sub=check(cnt,a,v);
     		if(sub!=0) {
     			ch=false;
-    			//System.out.printf("%d, %d 좌표 %d 방향 %d만큼 찍었음\n",position.get(cnt)/N,position.get(cnt)%N,a,sub);
     			helper(cnt+1,answer+sub,v,have+1);
     			back(cnt,sub,a,v);
     			
     		}
-//    		else {
-//    			System.out.println("불가능. 방향 전환");
-//    		}
     	}
     	 
     		helper(cnt+1,answer,v,have);
@@ -91,7 +91,6 @@ public class Solution
     	
     	int ni=position.get(cnt)/N;
     	int nj=position.get(cnt)%N;
-    	//System.out.printf("%d, %d 좌표 %d 방향 %d만큼 돌리기\n",ni,nj,dir,sub);
     	while(sub>0) {// 전선 설치가 불가능하면 원래대로
 			ni=ni+di[dir];
     		nj=nj+dj[dir];
@@ -100,7 +99,6 @@ public class Solution
 		}
     }
     static int check(int cnt,int dir, boolean[][] visit) {
-    	//System.out.printf("들어온 좌표 %d %d, 뱡향 %d\n",position.get(cnt)/N,position.get(cnt)%N,dir);
     	int ni=position.get(cnt)/N+di[dir];
     	int nj=position.get(cnt)%N+dj[dir];
     	int count=0;
