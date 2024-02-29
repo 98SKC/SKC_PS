@@ -68,57 +68,51 @@ public class Solution {
 		} 
 		
 	}
-	static void up(int i,int j) {
-		oper(i,j,0,1,2,5,6);
+
+	static void select(int i,int j,int dir) {
+		switch(dir) {
+		case 0: case 1://위
+			oper(i,j,dir,1,2+dir/2,5-dir,6+dir);
+			break;
+		case 2: case 3://오른쪽
+			oper(i,j,dir,1,2+dir/2,10-dir*2,10-dir*2+1);
+			break;
+		}
 	}
 
-	static void down(int i,int j) {
-		oper(i,j,1,1,2,4,7);
-	}
-	static void right(int i,int j) {
-		oper(i,j,2,1,3,6,7);
-	}
-	
-	static void left(int i,int j) {
-		oper(i,j,3,1,3,4,5);
-	}
-
-	
-	
 	static void range(int i,int j) {
-
 		int dir=map[i][j];
 
 		switch(dir) {
 			case 1:
-				up(i,j);
-				down(i,j);//right left 아래까지 같이
+				select(i,j,0);
+				select(i,j,1);//right left 아래까지 같이
 			case 3:
 				//가로
-				right(i,j);
-				left(i,j);
+				select(i,j,2);
+				select(i,j,3);
 				break;
 			case 2:
-				up(i,j);
-				down(i,j);
+				select(i,j,0);
+				select(i,j,1);
 				break;	
 			case 4:
 				// 상, 우 연결
-				up(i,j);
-				right(i,j);
+				select(i,j,0);
+				select(i,j,2);
 				break;
 			case 5:
 				// 하, 우 연결
-				down(i,j);
-				right(i,j);
+				select(i,j,1);
+				select(i,j,2);
 				break;
 			case 6:// 하 좌 연결
-				down(i,j);
-				left(i,j);
+				select(i,j,1);
+				select(i,j,3);
 				break;
 			case 7:// 상 좌 연결
-				up(i,j);
-				left(i,j);
+				select(i,j,0);
+				select(i,j,3);
 				break;
 			
 		}
