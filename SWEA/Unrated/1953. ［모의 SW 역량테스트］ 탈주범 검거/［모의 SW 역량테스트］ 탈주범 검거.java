@@ -4,10 +4,9 @@ import java.util.*;
 public class Solution {
 	static int[] di= {-1,1,0,0};//상 하 우 좌
 	static int[] dj= {0,0,1,-1};
-	static int N,M,R,C,L,ni,nj;
+	static int N,M,R,C,L,ni,nj,count;
 	static int[][] map;
 	static boolean[][] v;
-	static boolean[] check;
 	static Queue<Integer> q=new ArrayDeque<>();
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -17,6 +16,7 @@ public class Solution {
 
 		for (int tc = 1; tc <= TC; tc++) {
 			q.clear();
+			count=0;
 			st = new StringTokenizer(br.readLine());
 			N=Integer.parseInt(st.nextToken());// 터널의 세로크기
 			M=Integer.parseInt(st.nextToken());// 터널의 가로 크기
@@ -38,6 +38,7 @@ public class Solution {
 			
 			q.add(R*M+C);
 			v[R][C]=true;
+			count++;
 			while(!q.isEmpty()&&time<L) {// 더 이동 가능한 파이프가 없거나 시간이 끝나면 끝
 				size=q.size();
 				for(int a=0;a<size;a++) {
@@ -45,12 +46,6 @@ public class Solution {
 					range(sub/M,sub%M);
 				}
 				time++;
-			}
-			int count=0;
-			for(int i=0;i<N;i++) {
-				for(int j=0;j<M;j++) {
-					if(v[i][j]) count++;
-				}
 			}
 			sb.append("#").append(tc).append(" ").append(count).append("\n");
 		}
@@ -63,12 +58,11 @@ public class Solution {
 		if(ni>=0&&ni<N&&nj>=0&&nj<M&&!v[ni][nj]) {
 			if(map[ni][nj]==a ||map[ni][nj]==b||map[ni][nj]==c||map[ni][nj]==d) {
 				v[ni][nj]=true;
+				count++;
 				q.add(ni*M+nj);
 			}
 		} 
-		
 	}
-
 	static void select(int i,int j,int dir) {
 		switch(dir) {
 		case 0: case 1://위
@@ -79,10 +73,9 @@ public class Solution {
 			break;
 		}
 	}
-
+	
 	static void range(int i,int j) {
 		int dir=map[i][j];
-
 		switch(dir) {
 			case 1:
 				select(i,j,0);
@@ -97,25 +90,21 @@ public class Solution {
 				select(i,j,1);
 				break;	
 			case 4:
-				// 상, 우 연결
 				select(i,j,0);
 				select(i,j,2);
 				break;
 			case 5:
-				// 하, 우 연결
 				select(i,j,1);
 				select(i,j,2);
 				break;
-			case 6:// 하 좌 연결
+			case 6:
 				select(i,j,1);
 				select(i,j,3);
 				break;
-			case 7:// 상 좌 연결
+			case 7:
 				select(i,j,0);
 				select(i,j,3);
 				break;
-			
 		}
 	}
-
 }
