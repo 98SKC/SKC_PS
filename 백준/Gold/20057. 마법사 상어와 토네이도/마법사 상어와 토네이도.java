@@ -6,7 +6,6 @@ public class Main {
 	static int N;
 	static int[][] map;
 	static int answer=0;
-	static int count=0;
 
     //dir0 		  인덱스0	   1  2  3  4 5 6  7 8   9
     static int[] rli= {0, -1, 1,-2,-1,1,2,-1,1,  0};//모래 날리는 범위 좌부터, 또 상부터의 좌표그런데 알파를 9로 뺀. 
@@ -24,8 +23,7 @@ public class Main {
     static int[] dui= {-2, -1, -1, 0, 0, 0, 0, 1 ,1,  -1}; 
     static int[] duj= {0,-1, 1, -2, -1,1,2, -1, 1,  0};  
     
-								
-    static boolean[] check;// 모래가 날릴 수 있는 범위인지.
+	
     static int[] rp= { 5,10,10, 2, 7,7,2, 1,1};
     
     public static void main(String[] args) throws Exception {
@@ -38,7 +36,6 @@ public class Main {
         for(int i=0;i<N;i++) {
         	st=new StringTokenizer(br.readLine());
         	for(int j=0;j<N;j++) {
-        		
             	map[i][j]=Integer.parseInt(st.nextToken());
             }
         }
@@ -59,7 +56,7 @@ public class Main {
     	int alpha=sand;
     	int sub;
     	
-    	check=new boolean[10];
+
     	if(dir==0) {
     		di=rli;
     		dj=rlj;
@@ -73,43 +70,32 @@ public class Main {
     		di=dui;
     		dj=duj;
     	}
+    	
+    	map[i][j] = 0; // 토네이도가 위치한 곳은 모래를 제거.
 
-    	int cnt=0;
-    	for(int a=0;a<10;a++) {
-    		if(i+di[a]>=0&&i+di[a]<N &&j+dj[a]>=0 &&j+dj[a]<N){
-    			check[a]=true;
-    			cnt++;
-    		}
+    	for (int a = 0; a < 10; a++) {
+    		ni = i + di[a];
+	    	nj = j + dj[a];
+    		if(a==9) {
+    	    	if (ni >= 0 && ni < N && nj >= 0 && nj < N) {
+    	    	    map[ni][nj] += alpha; // 격자 내부라면 알파 모래 분배.
+    	    	} else {
+    	    	    answer += alpha; // 격자 외부라면 answer에 알파 모래 양 추가.
+    	    	}
+    	    }else {
+        	    sub = (int) (sand * (rp[a] * 0.01)); // 분배될 모래 양 계산.
+
+        	    if (ni >= 0 && ni < N && nj >= 0 && nj < N) {
+        	        map[ni][nj] += sub; // 격자 내부라면 모래 분배.
+        	    } else {
+        	        answer += sub; // 격자 외부라면 answer에 모래 양 추가.
+        	    }
+        	    alpha -= sub; // 분배된 모래 양만큼 alpha에서 차감.
+    	    }
+    		
     	}
+
     
-
-    	int ccnt=10-cnt;
-    	map[i][j]=0;//토네이도가 위치한 곳은 다 없엠.
-		for (int a = 0; a < 9; a++) {
-
-			ni = i + di[a];
-			nj = j + dj[a];
-			sub =(int) (sand * (rp[a]*0.01));
-
-			
-
-			if (check[a]) {
-				map[ni][nj] += sub;
-				
-			} else {
-				
-				answer += sub;
-			}
-			alpha -= sub;
-			
-		}
-		ni=i+di[9];
-		nj=j+dj[9];
-    	if(check[9]) {
-			map[ni][nj]+=alpha;	
-    	}else {
-    		answer+=alpha;
-    	}
 
     }
   
@@ -124,14 +110,10 @@ public class Main {
     	while(escape) {
     		
     		dir=(dir+1)%4;
-    		
-    	
     		switch(dir) {
-    		
     			case 0:
     				a++;
     				for(int c=0;c<a;c++) {
-    					
     					nj-=1;
     					if(ni==0&&nj==-1) {
     						escape=false;
@@ -151,8 +133,7 @@ public class Main {
     				a++;
     				for(int c=0;c<a;c++) {
     					nj+=1;
-    					distributionSand(ni,nj,dir,map[ni][nj]);
-    					
+    					distributionSand(ni,nj,dir,map[ni][nj]);			
     				}
     				break;
     			case 3:
