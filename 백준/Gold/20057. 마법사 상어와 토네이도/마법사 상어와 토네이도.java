@@ -100,53 +100,30 @@ public class Main {
     }
   
     static void movingTonado() {
+        int ni = N / 2;
+        int nj = N / 2;
+        int[][] directions = {{0, -1}, {1, 0}, {0, 1}, {-1, 0}}; // 순서대로 서(왼쪽), 남(아래), 동(오른쪽), 북(위)으로의 이동.
+        int move = 0; // 이동 횟수를 관리하는 변수.
+        boolean escape = true;
 
-    	int ni=N/2;
-    	int nj=N/2;
-    	int dir=-1;
-    	int a=0;
-    	int b=0;
-    	boolean escape=true;
-    	while(escape) {
-    		
-    		dir=(dir+1)%4;
-    		switch(dir) {
-    			case 0:
-    				a++;
-    				for(int c=0;c<a;c++) {
-    					nj-=1;
-    					if(ni==0&&nj==-1) {
-    						escape=false;
-    						break;
-    					}
-    					distributionSand(ni,nj,dir,map[ni][nj]);
-    				}
-    				break;
-    			case 1:
-    				b++;
-    				for(int c=0;c<b;c++) {
-    					ni+=1;
-    					distributionSand(ni,nj,dir,map[ni][nj]);
-    				}
-    				break;
-    			case 2:
-    				a++;
-    				for(int c=0;c<a;c++) {
-    					nj+=1;
-    					distributionSand(ni,nj,dir,map[ni][nj]);			
-    				}
-    				break;
-    			case 3:
-    				b++;
-    				for(int c=0;c<b;c++) {
-    					ni-=1;
-    					distributionSand(ni,nj,dir,map[ni][nj]);
-    				}
+        while(escape) {
+            for (int dir = 0; dir < 4 && escape; dir++) { // 4방향 순환.
+                int steps = (dir % 2 == 0) ? ++move : move; // 동, 서 방향일 때 이동 횟수 증가.
 
-    		}
-    		
-    	}
+                for (int c = 0; c < steps; c++) {
+                    ni += directions[dir][0];
+                    nj += directions[dir][1];
 
+                    if (ni < 0 || ni >= N || nj < 0 || nj >= N) { // 격자 범위를 벗어나면 종료.
+                        escape = false;
+                        break;
+                    }
+
+                    distributionSand(ni, nj, dir, map[ni][nj]);
+                }
+            }
+        }
     }
+
    
 }
