@@ -39,7 +39,6 @@ public class Main {
 			st = new StringTokenizer(br.readLine());
 			a=Integer.parseInt(st.nextToken());
 			b=Integer.parseInt(st.nextToken());
-//			System.out.println("-----"+(i+1)+"번째 블리자드------");
 			blizzard(a,b);
 			do{
 				pullMarble();
@@ -50,7 +49,7 @@ public class Main {
 		System.out.println(one+2*two+3*three);
 
 	}
-	//이를 기본 틀로 다른 메서드에 적용. 메서드를 직접 사용하지는 않음
+
 	static void search() {// 중심으로부터 돌아가면서 탐색하는 메서드
 		int ni=N/2;
 		int nj=N/2;
@@ -83,16 +82,11 @@ public class Main {
 			nj=nj+dj[d];
 			map[ni][nj]=0;
 		}
-//		System.out.println("--------상어가 구슬을 깨트림------------");
-//		for(int[] a:map) {
-//			System.out.println(Arrays.toString(a));
-//		}
-//		System.out.println("------------------------------");
-		//잘 깨트린다.
+
 	}
 	
 	static boolean chainBoom() {// 연속적인 구슬을 찾아 폭발시키는 메서드/ 막타가 안쳐짐.
-//		System.out.println("------------연쇄 폭발 시작--------------");
+
 		int ni=N/2;
 		int nj=N/2;
 		int number=1;
@@ -102,7 +96,7 @@ public class Main {
 		int dir=3;// 좌 하 우 상     3 2 4 1
 		while(ni>=0&&ni<N&&nj>=0&&nj<N){
 			for(int a=0;a<number;a++) {
-				//System.out.printf("ni는 %d nj는 %d \n",ni,nj);// 잘 도는건 확인
+
 				subQ.add(ni*N+nj);
 				before=map[ni][nj];
 				ni=ni+di[dir];
@@ -145,14 +139,12 @@ public class Main {
 				number++;
 			}
 		}
-//		for(int[] z:map) {
-//			System.out.println(Arrays.toString(z));
-//		}
+
 		return answer;
 	}
 	
 	static void pullMarble() {// 폭발, 혹은 구슬 깨기 이후 구슬을 당기는 메서드
-//		System.out.println("----------구슬을 당김------------");
+
 		q=new ArrayDeque<Integer>();
 		int ni=N/2;
 		int nj=N/2;
@@ -166,11 +158,9 @@ public class Main {
 				before=map[ni][nj];
 				ni=ni+di[dir];
 				nj=nj+dj[dir];
-				//System.out.println("어디서나감2");
+
 				if(ni<0||ni>=N||nj<0||nj>=N) break;
-				//System.out.printf("ni는 %d nj는%d  map[ni][nj]는%d  before는%d \n",ni,nj,map[ni][nj],before);
-				
-				//System.out.println("map[ni][nj]는"+map[ni][nj]);
+
 				if(map[ni][nj]!=0) {
 					q.add(map[ni][nj]);
 				} 
@@ -217,18 +207,12 @@ public class Main {
 				number++;
 			}
 		}
-//		for(int[] z:map) {
-//			System.out.println(Arrays.toString(z));
-//		}
-//		
+	
 
 	}
 	
 	static void grouping() {// 구슬을 그룹화하는 메서드
-//		System.out.println("----------------다음을 그룹화---------------");
-//		for(int[] z:map) {
-//			System.out.println(Arrays.toString(z));
-//		}
+
 		
 		arrQ=new ArrayDeque<int[]>();
 		int ni=N/2;
@@ -244,13 +228,13 @@ public class Main {
 				nj=nj+dj[dir];
 				if(ni<0||ni>=N||nj<0||nj>=N) break;
 				if(before!=map[ni][nj]) {
-					//System.out.printf("위치1 ni는%d nj는%d 값은%d  이전값은%d   이전값들 그룹 \n",ni,nj,map[ni][nj],before);
+				
 					if(size!=0)arrQ.add(new int[] {size,before});
 					size=1;
 				}else {
-					//System.out.printf("위치2 ni는%d nj는%d 값은%d  이전값은%d \n",ni,nj,map[ni][nj],before);
+			
 					size++;	
-					//System.out.println("size를 보자"+size);
+					
 				}
 				
 				
@@ -274,7 +258,6 @@ public class Main {
 	}
 	
 	static void insertMarble() {//  그룹별로 구슬 추가
-//		System.out.println("--------------구룹별로 구슬 추가----------------");
 		Queue<Integer> insert=new ArrayDeque<Integer>();
 		int size;
 		int number;
@@ -313,9 +296,7 @@ public class Main {
 				number++;
 			}
 		}
-//		for(int[] z:map) {
-//			System.out.println(Arrays.toString(z));
-//		}
+
 	}
 
 }
