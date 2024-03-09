@@ -30,9 +30,9 @@ public class Main {
             list[i] = new ArrayList<>();
         }
         
-        for(int i=0;i<D;i++) {
-        	list[i].add(new Node(i+1,1));
-        }//  기본 간선 가중치 1.
+//        for(int i=0;i<D;i++) {
+//        	list[i].add(new Node(i+1,1));
+//        }//  기본 간선 가중치 1.
         
         for(int i=0;i<N;i++) {
            st = new StringTokenizer(br.readLine());
@@ -65,6 +65,7 @@ public class Main {
         	  answer=arr[end];
         	  break;
           }
+          list[end].add(new Node(end+1,1));
           for(Node node : list[end]) {
              if(arr[node.end] > arr[end] + node.weight) {
                 arr[node.end] = arr[end] + node.weight;
