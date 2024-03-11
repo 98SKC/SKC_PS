@@ -65,7 +65,7 @@ public class Main {
 			
 			check[next]=true;
 			count++;
-		//	if(count==V) break;
+			if(count==V+1) break;
 			
 //			System.out.println(next);
 			
