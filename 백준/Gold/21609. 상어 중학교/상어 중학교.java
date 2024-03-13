@@ -18,7 +18,6 @@ public class Main {
 	static Queue<Integer> del=new ArrayDeque<>();// 삭제할 좌표들의 q
 	static Queue<Integer> q;// 블록 그룹을 구할 q
 	static Stack<Integer> alwaysFalse=new Stack<>();
-	static int max=0;
 	static int answer=0;
 	static boolean[][] v;
 	static boolean check;
@@ -32,8 +31,6 @@ public class Main {
 		
 		map=new int[N][N];
 		v=new boolean[N][N];
-		int cnt=0;
-		int sub;
 		for(int i=0;i<N;i++) {
 			st=new StringTokenizer(br.readLine());
 			for(int j=0;j<N;j++) {
@@ -57,36 +54,23 @@ public class Main {
 			//블록 삭제하기
 			if(del.size()>1) {
 				check=true;
-				int sub2;
-				//삭제부
-				//System.out.println("추가되는 점수: "+Math.pow(del.size(),2));
+				int sub;
+				
+				//삭제부분
 				answer+=Math.pow(del.size(),2);
 				while(!del.isEmpty()) {
-					sub2=del.poll();
-					map[sub2/N][sub2%N]=-2;
+					sub=del.poll();
+					map[sub/N][sub%N]=-2;
 				}
-				//System.out.println("삭제된 배열");
-//				for(int[] a:map) {
-//					System.out.println(Arrays.toString(a));
-//				}
+
 				
 				gravity();			
-				//System.out.println("1차 중력 작용 배열");
-//				for(int[] a:map) {
-//					System.out.println(Arrays.toString(a));
-//				}
-				
+
 				//맵 돌리기
 				turn();
-				//System.out.println("돌린 배열");
-//				for(int[] a:map) {
-//					System.out.println(Arrays.toString(a));
-//				}
+
 				gravity();			
-				//System.out.println("2차 중력 작용 배열");
-//				for(int[] a:map) {
-//					System.out.println(Arrays.toString(a));
-//				}
+
 			}
 		}
 		
@@ -129,7 +113,7 @@ public class Main {
 	
 	static void bfs(int i,int j,int block) {
 		q=new ArrayDeque<>();
-		Queue<Integer> sub3=new ArrayDeque<>();
+		Queue<Integer> subQ=new ArrayDeque<>();
 		q.add(i*N+j);
 		int sub;
 		int ci,cj,ni, nj;
@@ -150,21 +134,18 @@ public class Main {
 					}
 					q.add(ni*N+nj);
 					v[ni][nj]=true;
-					sub3.add(ni*N+nj);
+					subQ.add(ni*N+nj);
 				}
 			}
 			
 		}
-		
-		//위의 while에서 블록 그룹을 q에 넣어둠.
-//		System.out.println("삭제 예정인 블록 크리:"+del.size());
-//		System.out.println("찾은 그룹 크기: "+sub3.size());
 
-		if(del.size()<sub3.size()) {//새로 구한 그룹의 크기가 더 크면
-			del=sub3;
+
+		if(del.size()<subQ.size()) {//새로 구한 그룹의 크기가 더 크면
+			del=subQ;
 			rainbow=alwaysFalse.size();// 무지개 블록 개수 변경
-		}else if(del.size()==sub3.size()&&rainbow<=alwaysFalse.size()) {//만약 크기가 같으면 
-				del=sub3;
+		}else if(del.size()==subQ.size()&&rainbow<=alwaysFalse.size()) {//만약 크기가 같으면 
+				del=subQ;
 				rainbow=alwaysFalse.size();		
 		}//그룹이 작은건 고려 안함
 		
