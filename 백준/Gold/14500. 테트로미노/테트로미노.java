@@ -75,22 +75,10 @@ public class Main {
 	static void helper(int startI, int startJ) {
 
 	    // 모든 테트로미노 모양에 대해 반복
-	    int[][][] shapes = {pirate1, pirate2, pirate3, pirate4, magician1, magician2, magician3, magician4, thief1, thief2, thief3, thief4,thief5,thief6,thief7,thief8};
+	    int[][][] shapes = {knight,pirate1, pirate2, pirate3, pirate4, magician1, magician2, magician3, magician4, thief1, thief2, thief3, thief4,thief5,thief6,thief7,thief8};
 	    
 	    //'knight' 테트로미노 처리
 	    int tempSum = map[startI][startJ]; // 시작점 포함
-	    
-	    for (int[] a : knight) {
-            int ni = startI + a[0];
-            int nj = startJ + a[1];
-            if (ni >= 0 && ni < N && nj >= 0 && nj < M) {
-                tempSum += map[ni][nj];
-            } else {
-                tempSum = 0; // 범위를 벗어나면 합계 무효
-                break;
-            }
-        }
-	    max = Math.max(max, tempSum);
 	    
 	    // 'archer' 테트로미노 처리
 	    for (int direction = 0; direction < 2; direction++) {
@@ -98,38 +86,32 @@ public class Main {
 	        for (int a : archer) {
 	            int ni = startI + (direction == 0 ? 0 : a); // 가로 또는 세로 방향
 	            int nj = startJ + (direction == 0 ? a : 0);
-	            if (ni >= 0 && ni < N && nj >= 0 && nj < M) {
-	            	
+	            if (ni >= 0 && ni < N && nj >= 0 && nj < M) {	
 	                tempSum += map[ni][nj];
 	            } else {
 	                tempSum = 0; // 범위를 벗어나면 합계 무효
 	                break;
 	            }
 	        }
-	        //if(max<tempSum) System.out.printf("%d %d 좌표 궁수 방향 %d 에서 최대값 %d\n",startI,startJ,direction,tempSum);
 	        max = Math.max(max, tempSum);
 	    }
 
 
 	    // 나머지 테트로미노 처리
 	    for (int[][] shape : shapes) {
-	   
-	        for (int rot = 0; rot < 4; rot++) { // 회전 고려
 	            tempSum = map[startI][startJ]; // 시작점 포함
 	            for (int[] p : shape) {
-	                int ni = startI + p[rot % 2 == 0 ? 0 : 1];
-	                int nj = startJ + p[rot % 2 == 0 ? 1 : 0];
+	                int ni = startI + p[0];
+	                int nj = startJ + p[1];
 	                if (ni >= 0 && ni < N && nj >= 0 && nj < M) {
-	                	
 	                    tempSum += map[ni][nj];
 	                } else {
 	                    tempSum = 0; // 범위를 벗어나면 합계 무효
 	                    break;
 	                }
 	            }
-	          //  if(max<tempSum) System.out.printf("%d %d 좌표 시작 %d 유니온 %d모양에서 에서 최대값 %d\n",startI,startJ,count,rot,tempSum);
-	            max = Math.max(max, tempSum);
-	        }
+	           max = Math.max(max, tempSum);
+
 	    }
 
 	}
