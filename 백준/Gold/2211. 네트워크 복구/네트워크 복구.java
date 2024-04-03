@@ -3,128 +3,86 @@ import java.io.*;
 
 public class Main {
  
-	static class computer implements Comparable<computer>{
-		List<int[]> edgeList;// 어떤 경로로 여기까지 왔는지.
-		//answer(arr)용.pq용
-		
-		int num;// 지금 노드번호이자, list[start]의 도착지
-		int time;
+    static class Computer implements Comparable<Computer>{
+        int num; // 지금 노드번호
+        int time; // 현재 노드까지의 최소 시간
 
-		//시작 큐 넣기용.
-		public computer(int num, int time) {
-			edgeList=new ArrayList<>();
-			this.num=num;
-			this.time=time;
-		}
-		
-		//리스트 저장 용
-		public computer(int start,int num, int time) {
-			edgeList=new ArrayList<>();
-			edgeList.add(new int[] {start,num});
-			this.num=num;
-			this.time=time;
-		}
-		
-		
-		//경로 연결
-		public computer(List<int[]> edgeList,int num, int time) {
-			this.edgeList=edgeList;
-			this.num=num;
-			this.time=time;
-		}
+        public Computer(int num, int time) {
+            this.num = num;
+            this.time = time;
+        }
 
-		@Override
-		public int compareTo(computer o) {
-			// TODO Auto-generated method stub
-			return time-o.time;
-		}
-	}
-	
-	static int N,M;
-	static List<computer>[] list;
-	static computer[] arr;
-	static boolean v[];
-	static boolean[][] check;
-	
+        @Override
+        public int compareTo(Computer o) {
+            return this.time - o.time;
+        }
+    }
+    
+    static int N, M;
+    static List<Computer>[] list;
+    static Computer[] arr;
+    static boolean[] v;
+    static int[] parent; // 부모 노드 저장을 위한 배열 추가. 출력 시 부모노드와 인덱스를 출력
+
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        StringTokenizer st=new StringTokenizer(br.readLine());
-        N=Integer.parseInt(st.nextToken());
-        M=Integer.parseInt(st.nextToken());
-        list=new List[N+1];
-        arr=new computer[N+1];
-        //arr는 K에서 인덱스까지의 최단경로
-        for(int i=0; i<=N; i++) {
-            arr[i] = new computer(i, Integer.MAX_VALUE);
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        list = new ArrayList[N + 1];
+        arr = new Computer[N + 1];
+        v = new boolean[N + 1];
+        parent = new int[N + 1]; // 부모 노드 초기화
+
+        for (int i = 1; i <= N; i++) { // 0번 인덱스 사용 안 함
+            list[i] = new ArrayList<>();
+            arr[i] = new Computer(i, Integer.MAX_VALUE);
+            parent[i] = -1; // 부모 노드 없음으로 초기화
         }
         
-        v=new boolean[N+1];
-        check=new boolean[N+1][N+1];
-        for(int i=1;i<=N;i++) {
-        	list[i]=new ArrayList<>();
+        for (int i = 0; i < M; i++) {
+            st = new StringTokenizer(br.readLine());
+            int subNum = Integer.parseInt(st.nextToken());
+            int subNext = Integer.parseInt(st.nextToken());
+            int subTime = Integer.parseInt(st.nextToken());
+            list[subNum].add(new Computer(subNext, subTime));
+            list[subNext].add(new Computer(subNum, subTime));
         }
         
-        int subNum,subNext,subTime;
-        for(int i=0;i<M;i++) {
-        	st=new StringTokenizer(br.readLine());
-        	subNum=Integer.parseInt(st.nextToken());
-        	subNext=Integer.parseInt(st.nextToken());
-        	subTime=Integer.parseInt(st.nextToken());
-        	list[subNext].add(new computer(subNext,subNum,subTime));
-        	list[subNum].add(new computer(subNum,subNext,subTime));
-        	
-        }
         dijkstra();
         
-        List<int[]> answer=new ArrayList<>();
-        for(computer c:arr) {//질문. 여기도 null이 잡혀. dijkstra(); 에서 arr은 채워지지 않
-            
-        	for(int[] a:c.edgeList) {
-        		if(!check[a[0]][a[1]]) {
-        			answer.add(a);
-        			check[a[0]][a[1]]=true;
-        			check[a[1]][a[0]]=true;
-        		}
-        	}
-        }
-        System.out.println(answer.size());
-        for(int[] z:answer) {
-        	System.out.println(z[0]+" "+z[1]);
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        for (int i = 2; i <= N; i++) { // 1번 컴퓨터는 슈퍼컴퓨터이므로 제외
+            if (parent[i] != -1) { // 부모 노드가 있으면 경로가 존재
+                count++;
+                sb.append(parent[i]).append(" ").append(i).append("\n");
+            }
         }
         
-        
+        System.out.println(count);
+        System.out.print(sb.toString());
     }
     
     static void dijkstra() {
-    	PriorityQueue<computer> q=new PriorityQueue<>();//우선순의 큐를 사용한 다익스트라.
-		q.add(new computer(1,0));// 시작 노드를 큐에 삽입
-		arr[1].time=0;//스스로에 대한 가중치는 0
-		
-		while(!q.isEmpty()) {
-			computer c=q.poll();
-			int num=c.num;
-			
-			if(v[num]) continue;
-			v[num]=true;
-			
-			for(computer next:list[num]) {
-				if(arr[next.num].time>arr[num].time+next.time) {
-					arr[next.num].time=arr[num].time+next.time;
-					
-					List<int[]> newList = new ArrayList<>();
-					for (int[] edge : c.edgeList) {
-					    newList.add(Arrays.copyOf(edge, edge.length));
-					}
-					arr[next.num].edgeList = newList;
-					//System.out.println("여기 돌긴하나?");
-					arr[next.num].edgeList.add(new int[] {num,next.num});
-					
-	                q.add(new computer(arr[next.num].edgeList, next.num, arr[next.num].time));
-				}
-			}
-			
-			
-		}
+        PriorityQueue<Computer> q = new PriorityQueue<>();
+        q.add(new Computer(1, 0)); // 시작 노드를 큐에 삽입
+        arr[1].time = 0; // 시작 노드의 시간은 0
+
+        while (!q.isEmpty()) {
+            Computer c = q.poll();
+            int num = c.num;
+
+            if (v[num]) continue; // 이미 방문한 노드는 건너뜀
+            v[num] = true;
+
+            for (Computer next : list[num]) {
+                if (arr[next.num].time > arr[num].time + next.time) {
+                    arr[next.num].time = arr[num].time + next.time;
+                    parent[next.num] = num; // 부모 노드를 현재 노드로 설정
+                    q.add(new Computer(next.num, arr[next.num].time));
+                }
+            }
+        }
     }
 }
