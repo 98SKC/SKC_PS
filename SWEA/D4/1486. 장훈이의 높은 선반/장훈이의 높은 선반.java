@@ -33,11 +33,13 @@ public class Solution {
 	}
 	
 	public static void comb(int sum,int pos) {
+		if(answer==B) return;
 		if(pos==N) {
 			if(sum>=B) answer=Math.min(sum, answer);
 			return;
 		}
-		if(sum>answer) return;
+		if(sum>=answer) return;
+		
 		comb(sum,pos+1);
 		comb(sum+h[pos],pos+1);
 		
