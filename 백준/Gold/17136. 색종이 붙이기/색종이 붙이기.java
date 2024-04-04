@@ -37,10 +37,6 @@ public class Main {
 
         }
 
-
-      //  dfs(0,0,0);
-
-
         if(min==Integer.MAX_VALUE){
             min=-1;
         }
@@ -121,5 +117,3 @@ public class Main {
     }
 
 }
-
-
