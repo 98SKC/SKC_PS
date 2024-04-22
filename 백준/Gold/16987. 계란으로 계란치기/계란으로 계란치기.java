@@ -26,7 +26,7 @@ public class Main {
 	    }
 
 	    static void backtrack(int pos, int broken) {
-	    	//if (N - pos + broken<= answer) return;
+	    	if ((N - pos)*2 + broken<= answer) return;
 	
 	    	if (pos == N) {
 	            answer = Math.max(answer, broken);
