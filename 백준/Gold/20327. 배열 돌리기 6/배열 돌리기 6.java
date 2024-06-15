@@ -111,53 +111,90 @@ public class Main {
         }
     }
     
-    //완료
-    static void func3(int step) {//부분 배열 내에서 오른쪽으로 회전
-    	int sub;
-    	Queue<Integer> q=new ArrayDeque<>();
-    	for(int i=0;i<size;i+=Math.pow(2, step)) {
-        	for(int j=0;j<size;j+=Math.pow(2, step)) {
- 
-        		int startI=i;
-        		int startJ=j;
-        		
-        		for(int a=startI;a<startI+Math.pow(2, step);a++){
-        			for(int b=startJ;b<startJ+Math.pow(2, step);b++) {
-        				q.add(arr[a][b]);
-        			}
-        		}
-        		for(int b=(int)(startJ+Math.pow(2, step)-1);b>=startJ;b--){
-        			for(int a=startI;a<startI+Math.pow(2, step);a++) {
-        				arr[a][b]=q.poll();
-        			}
-        		}
-
+//    //완료
+//    static void func3(int step) {//부분 배열 내에서 오른쪽으로 회전
+//    	int sub;
+//    	Queue<Integer> q=new ArrayDeque<>();
+//    	for(int i=0;i<size;i+=Math.pow(2, step)) {
+//        	for(int j=0;j<size;j+=Math.pow(2, step)) {
+// 
+//        		int startI=i;
+//        		int startJ=j;
+//        		
+//        		for(int a=startI;a<startI+Math.pow(2, step);a++){
+//        			for(int b=startJ;b<startJ+Math.pow(2, step);b++) {
+//        				q.add(arr[a][b]);
+//        			}
+//        		}
+//        		for(int b=(int)(startJ+Math.pow(2, step)-1);b>=startJ;b--){
+//        			for(int a=startI;a<startI+Math.pow(2, step);a++) {
+//        				arr[a][b]=q.poll();
+//        			}
+//        		}
+//
+//            }
+//        }
+//    }
+//    //완료
+//    static void func4(int step) {//부분 배병 내에서 왼쪽으로 회전
+//    	int sub;
+//    	Queue<Integer> q=new ArrayDeque<>();
+//    	for(int i=0;i<size;i+=Math.pow(2, step)) {
+//        	for(int j=0;j<size;j+=Math.pow(2, step)) {
+// 
+//        		int startI=i;
+//        		int startJ=j+(int)(Math.pow(2, step)-1);
+//        		
+//        		for(int a=startI;a<startI+Math.pow(2, step);a++){
+//        			for(int b=startJ;b>=j;b--) {
+//        				q.add(arr[a][b]);
+//        			}
+//        		}
+//     
+//        		
+//        		for(int b=j;b<j+Math.pow(2, step);b++){
+//        			for(int a=startI;a<startI+Math.pow(2, step);a++) {
+//        				arr[a][b]=q.poll();
+//        			}
+//        		}
+//
+//            }
+//        }
+//    }
+    static void func3(int step) {
+        int subSize = (int) Math.pow(2, step);
+        for (int i = 0; i < size; i += subSize) {
+            for (int j = 0; j < size; j += subSize) {
+                int[][] temp = new int[subSize][subSize];
+                for (int x = 0; x < subSize; x++) {
+                    for (int y = 0; y < subSize; y++) {
+                        temp[y][subSize - 1 - x] = arr[i + x][j + y];
+                    }
+                }
+                for (int x = 0; x < subSize; x++) {
+                    for (int y = 0; y < subSize; y++) {
+                        arr[i + x][j + y] = temp[x][y];
+                    }
+                }
             }
         }
     }
-    //완료
-    static void func4(int step) {//부분 배병 내에서 왼쪽으로 회전
-    	int sub;
-    	Queue<Integer> q=new ArrayDeque<>();
-    	for(int i=0;i<size;i+=Math.pow(2, step)) {
-        	for(int j=0;j<size;j+=Math.pow(2, step)) {
- 
-        		int startI=i;
-        		int startJ=j+(int)(Math.pow(2, step)-1);
-        		
-        		for(int a=startI;a<startI+Math.pow(2, step);a++){
-        			for(int b=startJ;b>=j;b--) {
-        				q.add(arr[a][b]);
-        			}
-        		}
-     
-        		
-        		for(int b=j;b<j+Math.pow(2, step);b++){
-        			for(int a=startI;a<startI+Math.pow(2, step);a++) {
-        				arr[a][b]=q.poll();
-        			}
-        		}
 
+    static void func4(int step) {
+        int subSize = (int) Math.pow(2, step);
+        for (int i = 0; i < size; i += subSize) {
+            for (int j = 0; j < size; j += subSize) {
+                int[][] temp = new int[subSize][subSize];
+                for (int x = 0; x < subSize; x++) {
+                    for (int y = 0; y < subSize; y++) {
+                        temp[subSize - 1 - y][x] = arr[i + x][j + y];
+                    }
+                }
+                for (int x = 0; x < subSize; x++) {
+                    for (int y = 0; y < subSize; y++) {
+                        arr[i + x][j + y] = temp[x][y];
+                    }
+                }
             }
         }
     }
