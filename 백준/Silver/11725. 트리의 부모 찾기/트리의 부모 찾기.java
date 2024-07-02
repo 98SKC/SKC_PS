@@ -29,12 +29,13 @@ public class Main {
         int p;
         while(!q.isEmpty()) {
         	p=q.poll();
-        	v[p]=true;
+        	//v[p]=true;
         	
         	
         	for(int child : list[p]) {
         		if(v[child]) continue;
         		answer[child]=p;
+        		v[child]=true;
         		q.add(child);
         	}
         	
