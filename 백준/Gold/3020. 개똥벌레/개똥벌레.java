@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] args) throws Exception {
         BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st=new StringTokenizer(br.readLine());
-
+        StringBuilder sb=new StringBuilder();
         int N=Integer.parseInt(st.nextToken());
         int H=Integer.parseInt(st.nextToken());
 
@@ -42,8 +42,10 @@ public class Main {
             if(prefix[i]==min) count++;
             else break;
         }
-        System.out.println(min);
-        System.out.println(count);
+        sb.append(min+"\n"+count);
+
+        System.out.println(sb);
+
 
 
         //System.out.println("hello");
