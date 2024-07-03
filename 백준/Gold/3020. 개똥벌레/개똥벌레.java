@@ -12,11 +12,8 @@ public class Main {
         int N=Integer.parseInt(st.nextToken());
         int H=Integer.parseInt(st.nextToken());
 
-        int up=H;
-        int douwn=1;
         int sub;
         int[] prefix=new int[H+1];
-
         for(int i=0;i<N;i++){
             sub=Integer.parseInt(br.readLine());
             if(i%2==0){// 아래에서 위로
@@ -28,10 +25,8 @@ public class Main {
                 prefix[H-sub+1]++;
             }
         }
-
-        int min=Integer.MAX_VALUE;
+        int min=200000;
         int count=0;
-        
         for(int i=1;i<=H;i++){
             prefix[i]+=prefix[i-1];
             if(min>prefix[i]) {
@@ -39,24 +34,10 @@ public class Main {
             	count=1;
             }else if(min==prefix[i]){
             	count++;
-            }
-            
+            }     
         }
-
-//        Arrays.sort(prefix);
-//        int min=prefix[1];
-//        int count=1;
-//        for(int i=2;i<=H;i++){
-//            if(prefix[i]==min) count++;
-//            else break;
-//        }
-        sb.append(min+" "+count);
-
+        sb.append(min).append(" ").append(count);;
         System.out.println(sb);
-
-
-
-        //System.out.println("hello");
     }
 
 }
