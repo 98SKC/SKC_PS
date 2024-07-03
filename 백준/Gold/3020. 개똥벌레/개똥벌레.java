@@ -29,20 +29,28 @@ public class Main {
             }
         }
 
-
+        int min=Integer.MAX_VALUE;
+        int count=0;
+        
         for(int i=1;i<=H;i++){
             prefix[i]+=prefix[i-1];
-
+            if(min>prefix[i]) {
+            	min=prefix[i];
+            	count=1;
+            }else if(min==prefix[i]){
+            	count++;
+            }
+            
         }
 
-        Arrays.sort(prefix);
-        int min=prefix[1];
-        int count=1;
-        for(int i=2;i<=H;i++){
-            if(prefix[i]==min) count++;
-            else break;
-        }
-        sb.append(min+"\n"+count);
+//        Arrays.sort(prefix);
+//        int min=prefix[1];
+//        int count=1;
+//        for(int i=2;i<=H;i++){
+//            if(prefix[i]==min) count++;
+//            else break;
+//        }
+        sb.append(min+" "+count);
 
         System.out.println(sb);
 
