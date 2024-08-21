@@ -1,38 +1,50 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N=Integer.parseInt(br.readLine());
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int[] numbers = new int[N];
-        for(int i=0;i<N;i++){
-            numbers[i]=Integer.parseInt(st.nextToken());
+        StringTokenizer st;
+
+        int N = Integer.parseInt(br.readLine());
+        int[] list = new int[N];
+
+        st = new StringTokenizer(br.readLine());
+        for(int i=0; i<N; i++){
+            list[i]= Integer.parseInt(st.nextToken());
         }
-        Arrays.sort(numbers);
-        int result = 0;
-        for(int i = 0 ; i < N ; i++){
-            int left = 0;
-            int right = N-1;    // 음수값이 있음에 유의!
-            while(true){
-                // 현재 나(i)의 위치에 있는 경우
-                if(left == i) left++;
-                else if(right == i) right--;
 
-                if(left >= right) break;
+        Arrays.sort(list);
 
-                if(numbers[left] + numbers[right] > numbers[i]) right--;
-                else if(numbers[left] + numbers[right] < numbers[i]) left++;
-                else{      // 좋다!
-                    result++;
+        int ans = 0;
+        
+        for(int i = 0; i < N; i++){
+            int p1 = 0;
+            int p2 = N - 1;
+            
+            while(p1 < p2){
+                if(p2 == i) {
+                    p2--;
+                    continue;
+                }
+                if(p1 == i) {
+                    p1++;
+                    continue;
+                }
+
+                int sum = list[p1] + list[p2];
+                
+                if(sum > list[i]){
+                    p2--;
+                } else if(sum < list[i]){
+                    p1++;
+                } else {
+                    ans++;
                     break;
                 }
             }
         }
-        System.out.println(result);
-    }
 
+        System.out.println(ans);
+    }
 }
