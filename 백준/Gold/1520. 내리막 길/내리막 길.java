@@ -30,13 +30,8 @@ public class Main {
                 dp[i][j]=-1;
             }
         }
-      
-     
-
+   
         System.out.println(dfs(0,0));
-//        for(int[] a:dp) {
-//       	 System.out.println(Arrays.toString(a));
-//        }
     }
 	
 	
