@@ -53,8 +53,9 @@ public class Main {
         }
         int answer=0;
         Arrays.sort(medal);
-        for(int i=0;i<N;i++){
-            if(medal[i].number==K){
+        for(int i=1;i<=N;i++){
+            //System.out.println(medal[i].number+" "+i);
+            if(medal[i-1].number==K){
                 answer=i;
                 break;
             }
