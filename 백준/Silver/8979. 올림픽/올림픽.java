@@ -53,13 +53,38 @@ public class Main {
         }
         int answer=0;
         Arrays.sort(medal);
-        for(int i=1;i<=N;i++){
-            //System.out.println(medal[i].number+" "+i);
-            if(medal[i-1].number==K){
-                answer=i;
+        int grade=1;
+        int stack=0;
+        if(medal[0].number==K){
+            System.out.println(1);
+            return;
+        }
+        for(int i=1;i<N;i++){
+            if(medal[i].gold<medal[i-1].gold){
+               // System.out.println("???");
+                grade++;
+                grade+=stack;
+                stack=0;
+            }else if(medal[i].silver<medal[i-1].silver){
+               // System.out.println("??");
+                grade++;
+                grade+=stack;
+                stack=0;
+            }else if(medal[i].brz<medal[i-1].brz){
+               // System.out.println("?");
+                grade++;
+                grade+=stack;
+                stack=0;
+            }else{
+                stack++;
+            }
+           // System.out.println(i+"등수: "+grade);
+            if(medal[i].number==K){
+                answer=grade;
                 break;
             }
         }
+
         System.out.println(answer);
 
 
