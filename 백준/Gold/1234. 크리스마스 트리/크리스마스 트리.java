@@ -34,9 +34,9 @@ public class Main {
                         }
 
                         // 한 가지 색으로만 이루어져 있을 경우
-                        if (r - n >= 0) dp[n][r][g][b] += dp[n - 1][r - n][g][b] * 1;
-                        if (g - n >= 0) dp[n][r][g][b] += dp[n - 1][r][g - n][b] * 1;
-                        if (b - n >= 0) dp[n][r][g][b] += dp[n - 1][r][g][b - n] * 1;
+                        if (r - n >= 0) dp[n][r][g][b] += dp[n - 1][r - n][g][b];
+                        if (g - n >= 0) dp[n][r][g][b] += dp[n - 1][r][g - n][b];
+                        if (b - n >= 0) dp[n][r][g][b] += dp[n - 1][r][g][b - n];
 
                         // 두 가지 색으로 이루어져 있을 경우
                         if (n % 2 == 0) {
