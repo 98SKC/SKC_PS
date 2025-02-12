@@ -46,8 +46,9 @@ public class Main {
     }
 
     public static void back(int pos, int count) {
+
         if (count == K) { // K개의 알파벳을 선택했을 때 읽을 수 있는 단어 개수 계산
-            int pass = 0;
+    		int pass=0;
             for (String word : str) {
                 boolean canRead = true;
                 for (int j = 0; j < word.length(); j++) {
@@ -61,7 +62,24 @@ public class Main {
             answer = Math.max(answer, pass);
             return;
         }
-
+        
+        //다음 코드가 안되는 이유 -> antatica가 원 단어였을 때, 길이가 0인 단어가 들어와서 for문 자체를 실행 안하게됨
+        // 즉 단어 길이가 0이되면 if (j==word.length()-1) pass++; 가 실행이 안됨
+//        if (count == K) { // K개의 알파벳을 선택했을 때 읽을 수 있는 단어 개수 계산
+//    		int pass=0;
+//            for (String word : str) {
+//                for (int j = 0; j < word.length(); j++) {
+//                    if (!v[word.charAt(j) - 'a']) {
+//                        break;
+//                    }
+//                    if (j==word.length()-1) pass++;
+//                }
+//                
+//            }
+//            answer = Math.max(answer, pass);
+//            return;
+//        }
+		
         for (int i = pos; i < 26; i++) {
             if (!v[i]) {
                 v[i] = true;
