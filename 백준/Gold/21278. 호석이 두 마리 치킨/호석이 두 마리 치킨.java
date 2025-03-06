@@ -21,7 +21,10 @@ public class Main {
         int M=Integer.parseInt(st.nextToken());
         
         road=new int[N+1][N+1];
-        
+        if(N==2) {
+        	System.out.println(1+" "+2+" "+0);
+        	return;
+        }
         ArrayList<Integer>[] list=new ArrayList[N+1];
         for(int i=1;i<=N;i++) {
         	list[i]=new ArrayList<>();
@@ -48,6 +51,7 @@ public class Main {
     		}
     	
     	});
+    	
         for(int i=1;i<=N;i++) {
         	
         	boolean[] v=new boolean[N+1];
@@ -75,6 +79,7 @@ public class Main {
 //        	System.out.println(Arrays.toString(r));
 //        }
     }
+    
     public static void comb(int pos,int cnt) {
 
     	if(cnt==2) {
@@ -94,7 +99,9 @@ public class Main {
     		}
     		return;
     	}
+    	
     	if(pos>=N) return;
+    	
     	sub[cnt]=pos;
     	comb(pos+1,cnt+1);
     	comb(pos+1,cnt);
