@@ -69,7 +69,9 @@ public class Main{
         						//System.out.println(smallMap[r][c]);//smallMap에서 크기 2를 넘음
         						if(smallMap[r-i][c-j]==1&&map[r][c]==1){
         							find=false;
+        							break;
         						}
+        						if(!find) break;
         					}
         				}
         				
