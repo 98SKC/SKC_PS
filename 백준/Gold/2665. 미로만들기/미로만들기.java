@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Main{
 
 	
 	public static int[] di=new int[] {0,1,0,-1};
@@ -15,7 +15,7 @@ public class Main {
 		String str;
 		int[][] map=new int[N][N];
 		int[][] dijk=new int[N][N];
-		boolean[][] v=new boolean[N][N];
+	
 		int max=N*N+1;
 		for(int i=0;i<N;i++) {
 			str=br.readLine();
@@ -38,14 +38,11 @@ public class Main {
 		while(!pq.isEmpty()){
 			sub=pq.poll();
 			
-			v[sub[0]][sub[1]]=true;
-			if(v[N-1][N-1]) {
-				break;
-			}
+			
 			for(int a=0;a<4;a++) {
 				ni=sub[0]+di[a];
 				nj=sub[1]+dj[a];
-				if(ni>=0&&ni<N&&nj>=0&&nj<N&&!v[ni][nj]&&dijk[ni][nj]>sub[2]+map[ni][nj]) {
+				if(ni>=0&&ni<N&&nj>=0&&nj<N&&dijk[ni][nj]>sub[2]+map[ni][nj]) {
 					dijk[ni][nj]=sub[2]+map[ni][nj];
 					pq.add(new int[] {ni,nj,dijk[ni][nj]});
 				}
