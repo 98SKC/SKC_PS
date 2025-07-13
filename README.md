@@ -1,2 +1,2 @@
-# SKC_PS
-This is a auto push repository for Baekjoon Online Judge created with [BaekjoonHub](https://github.com/BaekjoonHub/BaekjoonHub).
+# 신규철의 알고리즘 기록
+푸른 잔디는 성실함의 척도.
