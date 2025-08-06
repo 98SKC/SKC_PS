@@ -48,44 +48,36 @@ public class Main {
         	
         	for(int i=zero;i<zero+one;i++) {
         		pos=list.get(i);
-        		//System.out.println("인덱스: "+i);
-        		honeycomb[pos[0]][pos[1]]+=1;
-        		increase[pos[0]][pos[1]]=1;
+        		increase[pos[0]][pos[1]]+=1;
         	}
-       
-//            for(int[] p:honeycomb) {
-//            	System.out.println(Arrays.toString(p));
-//            }
-        	
-        	//System.out.println(m+"번째 턴 2넣기");
-        	for(int i=zero+one;i<size;i++) {
-        		//System.out.println("인덱스: "+i);
-        		pos=list.get(i);
-        		honeycomb[pos[0]][pos[1]]+=2;
-        		increase[pos[0]][pos[1]]=2;
-        	}
-        	
 
-//            for(int[] p:honeycomb) {
-//            	System.out.println(Arrays.toString(p));
-//            }
-//        	
-        	
-        	for(int i=1;i<M;i++) {
-        		for(int j=1;j<M;j++) {
-            		honeycomb[i][j]+=increase[i-1][j];
-            		increase[i][j]=increase[i-1][j];
-            	}
+        	for(int i=zero+one;i<size;i++) {
+        		pos=list.get(i);
+        		increase[pos[0]][pos[1]]+=2;
         	}
         	
-//        	System.out.println(m+"번째 턴");
-//            for(int[] p:honeycomb) {
-//            	System.out.println(Arrays.toString(p));
+        	
+        	
+//        	System.out.println(m+"턴 증가량");
+//            for(int[] c:increase) {
+//            	System.out.println(Arrays.toString(c));
 //            }
-//            System.out.println("----------------------------");
+//            
         	
         }
+
+        for(int i=1;i<M;i++) {
+        	for(int j=1;j<M;j++) {
+        		increase[i][j]=increase[i-1][j];
+            }
+        }
         
+        
+    	for(int i=0;i<M;i++) {
+    		for(int j=0;j<M;j++) {
+        		honeycomb[i][j]+=increase[i][j];
+        	}
+    	}
         
         //크기가 MxM인 벌집
         //각 칸에는 애벌레들이 있다.
