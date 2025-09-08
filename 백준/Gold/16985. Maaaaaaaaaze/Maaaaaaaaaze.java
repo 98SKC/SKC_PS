@@ -2,7 +2,7 @@
 import java.util.*;
 import java.io.*;
 
-public class Main {
+public class Main{
 
 	//시뮬레이션 재활.
 	//클래스 세분화 실천
@@ -15,7 +15,7 @@ public class Main {
 	public static int[] di=new int[] {0,1,0,-1,0,0};
 	public static int[] dj=new int[] {1,0,-1,0,0,0};
 	public static int[] dk=new int[] {0,0,0,0,1,-1};
-
+	
 	
 	public static int answer=126;
 	
@@ -53,6 +53,7 @@ public class Main {
         }
 
         int subTurn=1;
+        out:
         for(int i=0;i<4;i++) {
         	for(int j=0;j<4;j++) {
         		for(int x=0;x<4;x++) {
@@ -76,7 +77,7 @@ public class Main {
 //        						}
 //        						System.out.println();
 //        					}
-        		
+        					if(answer==13) break out;
                         }
                     }
                 }
@@ -172,21 +173,23 @@ public class Main {
 		//(0,4,0) - (4,0,4)
 		//(0,0,4) - (4,4,0)
 		//(0,4,4) - (4,0,0)
+		
+		//근데 다 풀고보니, 시작점 고정해놓으면 회전하면서 다 고려됨
 		if(map[0][0][0]!=0&&map[4][4][4]!=0) {
 			bfs(0,0,0,4,4,4);
 		}
-		
-		if(map[0][4][0]!=0&&map[4][0][4]!=0) {
-			bfs(0,4,0,4,0,4);
-		}
-		
-		if(map[0][0][4]!=0&&map[4][4][0]!=0) {
-			bfs(0,0,4,4,4,0);
-		}
-			
-		if(map[0][4][4]!=0&&map[4][0][0]!=0) {
-			bfs(0,4,4,4,0,0);
-		}
+//		
+//		if(map[0][4][0]!=0&&map[4][0][4]!=0) {
+//			bfs(0,4,0,4,0,4);
+//		}
+//		
+//		if(map[0][0][4]!=0&&map[4][4][0]!=0) {
+//			bfs(0,0,4,4,4,0);
+//		}
+//			
+//		if(map[0][4][4]!=0&&map[4][0][0]!=0) {
+//			bfs(0,4,4,4,0,0);
+//		}
 		
 	}
 	
@@ -198,9 +201,10 @@ public class Main {
 		v[sk][si][sj]=1;
 		int[] p;
 		int ni,nj,nk;
+		
 		while(!q.isEmpty()) {
 			p=q.poll();
-			
+			if(p[3]>=answer) break;
 			for(int a=0;a<6;a++) {
 				nk=p[0]+dk[a];
 				ni=p[1]+di[a];
