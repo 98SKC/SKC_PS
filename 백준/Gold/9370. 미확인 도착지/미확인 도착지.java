@@ -1,5 +1,4 @@
 
-
 import java.util.*;
 import java.io.*;
 
@@ -121,7 +120,7 @@ public class Main {
             	
             	for(int[] next:edges[p[0]]){
             		
-            		//if(v[next[0]]) continue; // 이 조건이 다익스트라 들어가던가 기억이 안나네
+            		if(v[next[0]]) continue; // 이 조건이 다익스트라 들어가던가 기억이 안나네
             		n=next[0];// 다음 노드
             		d=next[1];// 다음 노드까지 거리
             		
@@ -154,7 +153,7 @@ public class Main {
             	
             	for(int[] next:edges[p[0]]){
             		
-            		//if(v[next[0]]) continue; // 이 조건이 다익스트라 들어가던가 기억이 안나네
+            		if(v[next[0]]) continue; // 이 조건이 다익스트라 들어가던가 기억이 안나네
             		n=next[0];// 다음 노드
             		d=next[1];// 다음 노드까지 거리
             		
@@ -187,7 +186,7 @@ public class Main {
             	
             	for(int[] next:edges[p[0]]){
             		
-            		//if(v[next[0]]) continue; // 이 조건이 다익스트라 들어가던가 기억이 안나네
+            		if(v[next[0]]) continue; // 이 조건이 다익스트라 들어가던가 기억이 안나네
             		n=next[0];// 다음 노드
             		d=next[1];// 다음 노드까지 거리
             		
