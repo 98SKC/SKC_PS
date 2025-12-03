@@ -1,87 +1,101 @@
-
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb=new StringBuilder();
         StringTokenizer st;
         
+        
         int T=Integer.parseInt(br.readLine());
-
-        int M;
-        int[] arr;
-        //시간복잡도 생각 안하고 List 구현한 버전
-        ArrayList<Integer> list;
-        for(int test_case=1;test_case<=T;test_case++){
+        StringBuilder sb=new StringBuilder();
+        
+        int N, sub;
+        
+        //maxHeap은 작은값들을 저장할 힙. 작은값중에서 큰값을 먼저 peek하도록.
+        //minHeap은 큰값들을 저장. 큰값중에서 작은값을 먼저 peek한다.
+        PriorityQueue<Integer> maxHeap;//클값 먼저
+        PriorityQueue<Integer> minHeap;//작은값 먼저
+        
+        for(int test_case=1;test_case<=T;test_case++) {
         	
-        	M=Integer.parseInt(br.readLine());// 배열 원소의 개수
-        	
-        	sb.append(M/2+1);
-        	sb.append("\n");
-        	//입력과 동시에 처리가 가능한 방법이 있을 것이라 생각이 든다.
-        	//arr=new int[N]; //원본 배열을 저장할 곳.
-        	
-        	int N=M/10;
-        	int sub;
-        	int cnt=0;
-        	list=new ArrayList<>();
-        	//System.out.println("T: "+test_case);
-        	for(int i=0;i<N;i++){
-        		
-        		st=new StringTokenizer(br.readLine());
-            	for(int j=0;j<10;j++) {
-            		list.add(Integer.parseInt(st.nextToken()));
-            		Collections.sort(list);
-            		//System.out.println(list.toString());
-            		if(j%2==0) { //홀수번 : 중앙값을 찾아라.
-            			sub=i*10+j;
-            			sub/=2;
-            			//System.out.println("sub: "+sub+" i: "+i+" ,j: "+j);
-            			sb.append(list.get(sub));
-            			sb.append(" ");
-            			cnt++;
-            			if(cnt==10) sb.append("\n");
+        	N=Integer.parseInt(br.readLine());
+        	int M=N/10;
+        	int remain = N % 10;  
+        
+            sb.append((N+1)/2).append("\n"); // 출력해야 하는 중앙값 수
+            
+            maxHeap=new PriorityQueue<>(Collections.reverseOrder());//클값 먼저
+            minHeap=new PriorityQueue<>();//작은값 먼저
+            
+            int cnt = 0; 
+            int printed = 0; // 출력한 중앙값 개수
+            
+            for(int k=0;k<M;k++) {
+            	st = new StringTokenizer(br.readLine());
+            	
+            	for(int i=0;i<10;i++){
+            		sub=Integer.parseInt(st.nextToken());
+            		cnt++; 
+            		
+            		maxHeap.offer(sub);
+            		
+            		if(!minHeap.isEmpty()&&maxHeap.peek()>minHeap.peek()) {
+            			minHeap.offer(maxHeap.poll());
             		}
             		
-            	}
-
+            	    if (maxHeap.size() > minHeap.size() + 1) {
+            	        minHeap.offer(maxHeap.poll());
+            	    } else if (maxHeap.size() < minHeap.size()) {
+            	        maxHeap.offer(minHeap.poll());
+            	    }
+            	    
+            	
+            	    if(cnt % 2 == 1) {
+            	        sb.append(maxHeap.peek()).append(" ");
+            	        printed++;
+            	        if(printed % 10 == 0) sb.append("\n");
+            	    }
+            	}  
+            }
+        	
+        	// 남은 입력 처리 -> 아니 이게 왜 컴파일 오류야 무슨 테케에서 대체
+        	//if(remain > 0) st = new StringTokenizer(br.readLine()); 
+        	if(remain > 0) {
+        	    st = new StringTokenizer(br.readLine());
+        	} else {
+        	    st = new StringTokenizer(""); // 빈 토크나이저라도 할당
         	}
         	
-        	M%=10;
-        	st=new StringTokenizer(br.readLine());
-        	for(int i=0;i<M;i++) {
+        
+        	for(int i=0;i<remain;i++){
+        		sub=Integer.parseInt(st.nextToken());
+        		cnt++; 
         		
-        		list.add(Integer.parseInt(st.nextToken()));
-        		Collections.sort(list);
-        		if(i%2==0) { //홀수번 : 중앙값을 찾아라.
-        			sub=N*10+i;
-        			sub/=2;
-        			sb.append(list.get(sub));
-        			sb.append(" ");
-        			cnt++;
-        			if(cnt==10) sb.append("\n");
+        		maxHeap.offer(sub);
+        		
+        		if(!minHeap.isEmpty()&&maxHeap.peek()>minHeap.peek()) {
+        			minHeap.offer(maxHeap.poll());
         		}
         		
+        	    if (maxHeap.size() > minHeap.size() + 1) {
+        	        minHeap.offer(maxHeap.poll());
+        	    } else if (maxHeap.size() < minHeap.size()) {
+        	        maxHeap.offer(minHeap.poll());
+        	    }
+        	    
+        	    
+        	    if(cnt % 2 == 1) {
+        	        sb.append(maxHeap.peek()).append(" ");
+        	        printed++;
+        	        if(printed % 10 == 0) sb.append("\n");
+        	    }
         	}
         	
-        	if(cnt!=10) sb.append("\n");
-        	//문제의 요지는 매 순간 정렬하면 시간이 오래걸릴 것.
-        	//테스트케이스 1000에 삽입 및 삭제가 각 9999이라고 하면 
-        	//9999000번의 삽입 탐색 이동 이 필요
-        	//이럴 때 시간복잡도는 
-        	
-        	
+        	sb.append("\n"); // 테스트케이스 간 줄 구분
         }
         
-        
         System.out.println(sb);
-        
-        
     }
-        
 }
-
-
