@@ -59,11 +59,11 @@ public class Main{
         	i=Integer.parseInt(st.nextToken());;
         	
         	//역을 설립한다. i,j 두개의 파라미터
-        	if(order.equals("BN")||order.equals("BP")) {
+        	if(order.charAt(0)=='B') {
         		j=Integer.parseInt(st.nextToken());
-        		if(order.equals("BN")) {
+        		if(order.charAt(1)=='N') {
         			sb.append(calBn(i,j)+"\n");
-        		}else if(order.equals("BP")) {
+        		}else if(order.charAt(1)=='P') {
         			sb.append(calBp(i,j)+"\n");
         		}else {
         			System.out.println("문자열을 못읽는 오류");
@@ -71,9 +71,9 @@ public class Main{
         		}
         		
         	}else {//역을 폐쇠한다. i 한개만의 파라미터
-        		if(order.equals("CN")) {
+        		if(order.charAt(1)=='N') {
         			sb.append(calCn(i)+"\n");
-        		}else if(order.equals("CP")) {
+        		}else if(order.charAt(1)=='P') {
         			sb.append(calCp(i)+"\n");
         		}else {
         			System.out.println("문자열을 못읽는 오류");
