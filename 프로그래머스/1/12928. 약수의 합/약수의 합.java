@@ -7,7 +7,8 @@ class Solution {
 				answer += i;
 			}
 		}
-      
+      //깃 잔디 반영이 안되어 다시 push
+	  int git=1;
       return answer;
   }
 }
