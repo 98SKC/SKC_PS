@@ -4,6 +4,7 @@ import java.util.*;
 class Solution {
     public int solution(int n, int[] money) {
         int asnwer=0;
+        int test=1;
         long[] dp = new long[n+1];
         Arrays.sort(money);
 
