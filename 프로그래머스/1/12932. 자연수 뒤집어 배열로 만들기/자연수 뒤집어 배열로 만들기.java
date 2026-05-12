@@ -11,6 +11,7 @@ class Solution {
         System.out.println(n);
         cnt++;
     }
+    int test=0; //깃 계정 연동 테스트
     
     return answer;
   }
