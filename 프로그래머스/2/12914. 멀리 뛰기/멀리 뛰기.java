@@ -12,9 +12,10 @@ class Solution {
         arr[1]=1;
         arr[0]=0;
         answer=helper(n);
-
+        int test=0;
         return answer%1234567;
     }
+
     public long helper(int n){
         if(arr[n]!=0){
             return arr[n];
