@@ -12,7 +12,7 @@ class Solution {
         arr[1]=1;
         arr[0]=0;
         answer=helper(n);
-        int test=0;
+        int test=5;
         return answer%1234567;
     }
 
